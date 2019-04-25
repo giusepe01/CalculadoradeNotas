@@ -150,4 +150,4 @@ public class MainActivity extends AppCompatActivity {
     // O CAMPO TextView3 (CAMPO ONDE É EXIBIDO O RESULTADO DA CONTA DE MÉDIA) É RESETADO PARA NULL
     // UTILIZANDO A FUNÇÃO textView3.setText(null)
     // TODA VEZ QUE DER SUCESSO, ELE TAMBÉM RESETA O CAMPO E FAZ A CONTA DNV, APAGANDO O RESULTADO ANTIGO
-
+    // Repositorio no GIT https://github.com/giusepe01/CalculadoradeNotas
