@@ -8,9 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.example.calculadoradenotas.Func;
 
 // Declara os campos da parte gráfica
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
     EditText textInputNota1;
     EditText textInputNota2;
     EditText textInputNota3;
