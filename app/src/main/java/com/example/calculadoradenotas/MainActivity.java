@@ -2,16 +2,16 @@ package com.example.calculadoradenotas;
 // Importando as Bibliotecas do Android
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.calculadoradenotas.Func;
+
+import static com.example.calculadoradenotas.Func.*;
 
 // Declara os campos da parte gráfica
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements Func{
     EditText textInputNota1;
     EditText textInputNota2;
     EditText textInputNota3;
@@ -135,13 +135,11 @@ public class MainActivity extends AppCompatActivity{
                 // dividido por 0,4 para saber o valor em média que tem que tirar
                 // dividido por 0,4 novamente para saber em quantidade de questões
             } else {
-                Resto = (((5 - Media) / 0.4) / 0.4);
-                Toast toast = Toast.makeText(this, "Você precisa acertar " + Math.round(Resto) + " Questões para tirar 5", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
-                toast.show();
+
             }
-        }
     }
+
+}
 
 }
 
