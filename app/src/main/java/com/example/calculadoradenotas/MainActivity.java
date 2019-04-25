@@ -95,9 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 Media = (AP1 * 0.3) + (AP2 * 0.3) + (AP3 * 0.4);
                 textView3.setText(Media.toString());
             }
-        }
-        return Media;
-    }
+        }return Media; }
 
     // Função de ação do botão de questções
     public void CalcularQuestoesAP3(View view) {
