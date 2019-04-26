@@ -32,89 +32,66 @@ public class MainActivity extends AppCompatActivity implements Func{
         textView3 = (TextView) findViewById(R.id.textView3);
         btnCalcular = (Button) findViewById(R.id.btnCalcular);
     }
-
     public Double CalcularNota(View view) {
 
         if (AllNull()) {
-            AllNullM();
             Clear();
-        } else if (textInputNota1.getText().toString().trim().equals("")) {
-            Toast.makeText(this, "A nota 1 está vazia!", Toast.LENGTH_LONG).show();
-            textView3.setText(null);
-            // verifica se campo 2 está vazio
-        } else if (textInputNota2.getText().toString().trim().equals("")) {
-            Toast.makeText(this, "A nota 2 está vazia!", Toast.LENGTH_LONG).show();
-            textView3.setText(null);
-            // Se os dois campos estiverem preenchidos, faz a conversão do valor pego para double
-        } else if (textInputNota3.getText().toString().trim().equals("")) {
+        } else if (Num1Null()) {
+            Clear();
+        } else if (Num2Null()) {
+            Clear();
+        } else if (Num3Null()) {
             ConvertN1();
             ConvertN2();
-            // Verifica se o valor da nota é válido
-            if (AP1 < 0 || AP1 > 10) {
-                Toast.makeText(this, "Nota 1 com valor inválido!", Toast.LENGTH_LONG).show();
-                textView3.setText(null);
-                // Verifica se o Valor da nota é válido
-            } else if (AP2 < 0 || AP2 > 10) {
-                Toast.makeText(this, "Nota 2 com valor inválido!", Toast.LENGTH_LONG).show();
-                textView3.setText(null);
-                // Se for, faz a média com as duas notas
+            if (ValNum1()) {
+                Clear();
+            } else if (ValNum2()) {
+                Clear();
             } else {
                 Media2();
-                textView3.setText(Media.toString());
             }
-            // se ele não cair nos if de cima, quer dizer que ele tem as 3 notas preenchidas
-            // então, converte as 3 notas para double
         } else {
             ConvertN1();
             ConvertN2();
             ConvertN3();
-            // Verifica se as notas são válidas
-            if (AP1 < 0 || AP1 > 10) {
-                Toast.makeText(this, "Nota 1 com valor inválido!", Toast.LENGTH_LONG).show();
-                textView3.setText(null);
-                // Verifica se as notas são válidas
-            } else if (AP2 < 0 || AP2 > 10) {
-                Toast.makeText(this, "Nota 2 com valor inválido!", Toast.LENGTH_LONG).show();
-                textView3.setText(null);
-                // Verifica se as notas são válidas
-            } else if (AP3 < 0 || AP3 > 10) {
-                Toast.makeText(this, "Nota 3 com valor inválido!", Toast.LENGTH_LONG).show();
-                textView3.setText(null);
-                // se for, calcula a média com as 3 Notas
+            if (ValNum1()) {
+                Clear();
+            } else if (ValNum2()) {
+                Clear();
+            } else if (ValNum3()) {
+                Clear();
             } else {
-                Media = (AP1 * 0.3) + (AP2 * 0.3) + (AP3 * 0.4);
-                textView3.setText(Media.toString());
+                Media3();
             }
         }return Media; }
 
-    // Função de ação do botão de questções
     public void CalcularQuestoesAP3(View view) {
-        // Verifica se todos os campos estão vazios
-        if (textInputNota1.getText().toString().trim().equals("") && textInputNota2.getText().toString().trim().equals("")) {
-            Toast.makeText(this, "Todos as notas estão vazias!", Toast.LENGTH_LONG).show();
-            textView3.setText(null);
-            // Verifica se a nota 1 ta vazia
-        } else if (textInputNota1.getText().toString().trim().equals("")) {
-            Toast.makeText(this, "A nota 1 está vazia!", Toast.LENGTH_LONG).show();
-            textView3.setText(null);
-            // Verifica se a nota 2 está vazia
-        } else if (textInputNota2.getText().toString().trim().equals("")) {
-            Toast.makeText(this, "A nota 2 está vazia!", Toast.LENGTH_LONG).show();
-            textView3.setText(null);
-            // Verifica se a nota 3 está preenchida
-        } else if (!textInputNota3.getText().toString().trim().equals("")) {
-            Toast.makeText(this, "Você ja fez a AP3!", Toast.LENGTH_LONG).show();
-            textView3.setText(null);
-            // se deu tudo certo, converte as notas para double
+
+        if (AllNull()) {
+            Clear();
+        } else if (Num1Null()) {
+            Clear();
+        } else if (Num2Null()) {
+            Clear();
+        } else if (Num3Full()) {
+            Clear();
         } else {
                 ConvertN1();
                 ConvertN2();
+                if (ValNum1()) {
+                Clear();
+                } else if (ValNum2()) {
+                Clear();
+                } else {
                 Media2();
-            if (Media >= 5) {
-                Aprovado();
-            } else {
-                QtdQuest();
+                    if (Reprovado()) {
+                    } else if (Aprovado()) {
+                    }
+                    else{
+                        QtdQuest();
+                    }
             }
+
     }
 }
     @Override
@@ -125,9 +102,22 @@ public class MainActivity extends AppCompatActivity implements Func{
         toast.show();
     }
     @Override
-    public void Aprovado() {
-        Toast.makeText(this, "Você não depende da AP3, você já passou com: " + Media, Toast.LENGTH_LONG).show();
-        textView3.setText(null);
+    public boolean Aprovado() {
+        if (Media >= 5) {
+            Toast.makeText(this, "Você não depende da AP3, você já passou ", Toast.LENGTH_LONG).show();
+            textView3.setText(Media.toString());
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean Reprovado(){
+        if (Media < 1) {
+            Toast.makeText(this, "INFELIZMENTE, VOCÊ ESTÁ REPROVADO", Toast.LENGTH_LONG).show();
+            textView3.setText(Media.toString());
+            return true;
+        }
+        return false;
     }
     @Override
     public void ConvertN1() {
@@ -144,21 +134,79 @@ public class MainActivity extends AppCompatActivity implements Func{
     @Override
     public void Media2() {
         Media = (AP1 * 0.3) + (AP2 * 0.3);
+        textView3.setText(Media.toString());
+    }
+    @Override
+    public void Media3() {
+        Media = (AP1 * 0.3) + (AP2 * 0.3) + (AP3 * 0.4);
+        textView3.setText(Media.toString());
     }
     @Override
     public boolean AllNull() {
         if (textInputNota1.getText().toString().trim().equals("") && textInputNota2.getText().toString().trim().equals("") && textInputNota3.getText().toString().trim().equals("")) {
+            Toast.makeText(this, "Todos as notas estão vazias!", Toast.LENGTH_LONG).show();
             return true;
     }
+        return false;
+}
+    @Override
+    public boolean Num1Null() {
+        if (textInputNota1.getText().toString().trim().equals("")) {
+            Toast.makeText(this, "A nota 1 está vazia!", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean Num2Null() {
+        if (textInputNota2.getText().toString().trim().equals("")) {
+            Toast.makeText(this, "A nota 2 está vazia!", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean Num3Null() {
+        if (textInputNota3.getText().toString().trim().equals("")) {
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean ValNum1() {
+        if (AP1 < 0 || AP1 > 10) {
+            Toast.makeText(this, "Nota 1 com valor inválido!", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean ValNum2() {
+        if (AP2 < 0 || AP2> 10) {
+            Toast.makeText(this, "Nota 2 com valor inválido!", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean ValNum3() {
+        if (AP3 < 0 || AP3> 10) {
+            Toast.makeText(this, "Nota 3 com valor inválido!", Toast.LENGTH_LONG).show();
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public boolean Num3Full(){
+        if (!textInputNota3.getText().toString().trim().equals("")) {
+            Toast.makeText(this, "Você ja fez a AP3!", Toast.LENGTH_LONG).show();
+            return true;
+        }
         return false;
     }
     @Override
     public void Clear() {
         textView3.setText(null);
-    }
-    @Override
-    public void AllNullM() {
-        Toast.makeText(this, "Todos as notas estão vazias!", Toast.LENGTH_LONG).show();
     }
 }
 
