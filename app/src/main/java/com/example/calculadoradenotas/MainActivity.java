@@ -1,16 +1,14 @@
 package com.example.calculadoradenotas;
-// Importando as Bibliotecas do Android
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static com.example.calculadoradenotas.Func.*;
-
-// Declara os campos da parte gráfica
 public class MainActivity extends AppCompatActivity implements Func{
     EditText textInputNota1;
     EditText textInputNota2;
@@ -18,17 +16,12 @@ public class MainActivity extends AppCompatActivity implements Func{
     TextView textView3;
     Button btnCalcular;
 
-    // Declaração de variáveis
     Double AP1;
     Double AP2;
     Double AP3;
-    Double Resultado;
     Double Media;
     Double Resto;
 
-
-
-    // Pegando os valores e instanciado os campos, informa que o valor de tal campo, refere-se a tal variável
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,15 +33,11 @@ public class MainActivity extends AppCompatActivity implements Func{
         btnCalcular = (Button) findViewById(R.id.btnCalcular);
     }
 
-
-    // Função de ação do botão Calcular Nota
     public Double CalcularNota(View view) {
 
-        // Verifica se todos os campos estão vazios
-        if (textInputNota1.getText().toString().trim().equals("") && textInputNota2.getText().toString().trim().equals("") && textInputNota3.getText().toString().trim().equals("")) {
-            Toast.makeText(this, "Todos as notas estão vazias!", Toast.LENGTH_LONG).show();
-            textView3.setText(null);
-            // Verifica se campo 1 está vazio
+        if (AllNull()) {
+            AllNullM();
+            Clear();
         } else if (textInputNota1.getText().toString().trim().equals("")) {
             Toast.makeText(this, "A nota 1 está vazia!", Toast.LENGTH_LONG).show();
             textView3.setText(null);
@@ -58,8 +47,8 @@ public class MainActivity extends AppCompatActivity implements Func{
             textView3.setText(null);
             // Se os dois campos estiverem preenchidos, faz a conversão do valor pego para double
         } else if (textInputNota3.getText().toString().trim().equals("")) {
-            AP1 = Double.parseDouble(textInputNota1.getText().toString());
-            AP2 = Double.parseDouble(textInputNota2.getText().toString());
+            ConvertN1();
+            ConvertN2();
             // Verifica se o valor da nota é válido
             if (AP1 < 0 || AP1 > 10) {
                 Toast.makeText(this, "Nota 1 com valor inválido!", Toast.LENGTH_LONG).show();
@@ -70,15 +59,15 @@ public class MainActivity extends AppCompatActivity implements Func{
                 textView3.setText(null);
                 // Se for, faz a média com as duas notas
             } else {
-                Media = (AP1 * 0.3) + (AP2 * 0.3);
+                Media2();
                 textView3.setText(Media.toString());
             }
             // se ele não cair nos if de cima, quer dizer que ele tem as 3 notas preenchidas
             // então, converte as 3 notas para double
         } else {
-            AP1 = Double.parseDouble(textInputNota1.getText().toString());
-            AP2 = Double.parseDouble(textInputNota2.getText().toString());
-            AP3 = Double.parseDouble(textInputNota3.getText().toString());
+            ConvertN1();
+            ConvertN2();
+            ConvertN3();
             // Verifica se as notas são válidas
             if (AP1 < 0 || AP1 > 10) {
                 Toast.makeText(this, "Nota 1 com valor inválido!", Toast.LENGTH_LONG).show();
@@ -118,33 +107,58 @@ public class MainActivity extends AppCompatActivity implements Func{
             textView3.setText(null);
             // se deu tudo certo, converte as notas para double
         } else {
-            AP1 = Double.parseDouble(textInputNota1.getText().toString());
-            AP2 = Double.parseDouble(textInputNota2.getText().toString());
-
-            Media = (AP1 * 0.3) + (AP2 * 0.3);
-
-            // verifica se a média ja está aprovada
-            if (Media > 5) {
-                Toast.makeText(this, "Você não está dependendo da AP3 para passar, este app não é para você!!!", Toast.LENGTH_LONG).show();
-                textView3.setText(null);
-                // Verifica se a média ja está aprovada
-            } else if (Media == 5) {
-                Toast.makeText(this, "Você não está dependendo da AP3 para passar, você já passou com 5.", Toast.LENGTH_LONG).show();
-                textView3.setText(null);
-                // Se não, ve quanto falta para tirar, média necessaria - media real
-                // dividido por 0,4 para saber o valor em média que tem que tirar
-                // dividido por 0,4 novamente para saber em quantidade de questões
+                ConvertN1();
+                ConvertN2();
+                Media2();
+            if (Media >= 5) {
+                Aprovado();
             } else {
-
+                QtdQuest();
             }
     }
-
+}
+    @Override
+    public void QtdQuest() {
+        Resto = (((5 - Media) / 0.4) / 0.4);
+        Toast toast = Toast.makeText(this, "Você precisa acertar " + Math.round(Resto) + " Questões para tirar 5", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+        toast.show();
+    }
+    @Override
+    public void Aprovado() {
+        Toast.makeText(this, "Você não depende da AP3, você já passou com: " + Media, Toast.LENGTH_LONG).show();
+        textView3.setText(null);
+    }
+    @Override
+    public void ConvertN1() {
+        AP1 = Double.parseDouble(textInputNota1.getText().toString());
+    }
+    @Override
+    public void ConvertN2() {
+        AP2 = Double.parseDouble(textInputNota2.getText().toString());
+    }
+    @Override
+    public void ConvertN3() {
+        AP3 = Double.parseDouble(textInputNota3.getText().toString());
+    }
+    @Override
+    public void Media2() {
+        Media = (AP1 * 0.3) + (AP2 * 0.3);
+    }
+    @Override
+    public boolean AllNull() {
+        if (textInputNota1.getText().toString().trim().equals("") && textInputNota2.getText().toString().trim().equals("") && textInputNota3.getText().toString().trim().equals("")) {
+            return true;
+    }
+        return false;
+    }
+    @Override
+    public void Clear() {
+        textView3.setText(null);
+    }
+    @Override
+    public void AllNullM() {
+        Toast.makeText(this, "Todos as notas estão vazias!", Toast.LENGTH_LONG).show();
+    }
 }
 
-}
-
-    // TODA VEZ QUE ENCONTRADO UM RESULTADO NÃO ESPERADO, COMO VALOR DA NOTA INVÁLIDO, CAMPO VAZIO, OU ALGO DO TIPO
-    // O CAMPO TextView3 (CAMPO ONDE É EXIBIDO O RESULTADO DA CONTA DE MÉDIA) É RESETADO PARA NULL
-    // UTILIZANDO A FUNÇÃO textView3.setText(null)
-    // TODA VEZ QUE DER SUCESSO, ELE TAMBÉM RESETA O CAMPO E FAZ A CONTA DNV, APAGANDO O RESULTADO ANTIGO
-    // Repositorio no GIT https://github.com/giusepe01/CalculadoradeNotas
