@@ -17,9 +17,9 @@ public class Tela2 extends AppCompatActivity {
         setContentView(R.layout.activity_tela2);
         TextView=(TextView) findViewById(R.id.textView2);
 
-        ((TextView) TextView).setText("De acordo com as regras da instituição DEVRY as notas não tem o mesmo peso pelo fato de serem ponderadas diferentes em relação entre as primeiras provas e a última. O valor é calculado da seguinte forma: " +
-                "Nota AP1 = 30%"+
-                " Nota AP2 = 30%"+
+        ((TextView) TextView).setText("De acordo com as regras da instituição DEVRY as notas não tem o mesmo peso pelo fato de serem ponderadas diferentes em relação entre as primeiras provas e a última. O valor é calculado da seguinte forma: " + "\n" +
+                "Nota AP1 = 30%" + "\n" +
+                " Nota AP2 = 30%"+ "\n" +
                 " Nota AP3 = 40%"
         );
     }
