@@ -1,6 +1,6 @@
 package com.example.calculadoradenotas;
 
-public interface Func {
+public interface Func{
 
      void QtdQuest();
      boolean Aprovado();

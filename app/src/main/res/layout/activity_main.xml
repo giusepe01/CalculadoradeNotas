@@ -59,6 +59,7 @@
         android:shadowColor="@color/colorPrimaryDark"
         android:text="Calcular Nota" />
 
+
     <Button
         android:id="@+id/button"
         style="@android:style/Widget.Holo.Button.Toggle"

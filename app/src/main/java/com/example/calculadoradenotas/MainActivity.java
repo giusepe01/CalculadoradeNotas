@@ -64,7 +64,8 @@ public class MainActivity extends AppCompatActivity implements Func{
             } else {
                 Media3();
             }
-        }return Media; }
+        }
+        return Media; }
 
     public void CalcularQuestoesAP3(View view) {
 
@@ -215,5 +216,7 @@ public class MainActivity extends AppCompatActivity implements Func{
         Intent intent = new Intent(this, Tela2.class);
         startActivity(intent);
     }
+
+
 }
 
