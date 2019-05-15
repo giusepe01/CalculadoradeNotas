@@ -73,4 +73,19 @@
         android:shadowColor="@color/colorPrimaryDark"
         android:text="Calcular questões AP3" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="167dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:layout_marginLeft="300px"
+        android:layout_marginTop="300dp"
+        android:onClick="proximaTela"
+        android:text="Dúvidas sobre o calculo?"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </LinearLayout>

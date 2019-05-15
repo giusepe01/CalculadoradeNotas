@@ -1,5 +1,6 @@
 package com.example.calculadoradenotas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -207,6 +208,12 @@ public class MainActivity extends AppCompatActivity implements Func{
     @Override
     public void Clear() {
         textView3.setText(null);
+    }
+
+    public void proximaTela(View view)
+    {
+        Intent intent = new Intent(this, Tela2.class);
+        startActivity(intent);
     }
 }
 
